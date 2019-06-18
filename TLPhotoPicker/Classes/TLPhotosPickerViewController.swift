@@ -122,9 +122,8 @@ open class TLPhotosPickerViewController: UIViewController {
     public var configure = TLPhotosPickerConfigure()
     public var customDataSouces: TLPhotopickerDataSourcesProtocol? = nil
     
-    public var allDone = false
     private var iCloudCollection = Set<PHAsset>()
-    
+
     private var usedCameraButton: Bool {
         get {
             return self.configure.usedCameraButton
@@ -849,43 +848,46 @@ extension TLPhotosPickerViewController: UICollectionViewDelegate,UICollectionVie
                 cell.loader.state = .progress(Progress(totalUnitCount: 100))
 
                 if let reqID = asset.cloudImageDownload(progressBlock: { (proggress) in
-                    self.iCloudCollection.insert(phAsset)
+                    if proggress == 0 {
+                        self.iCloudCollection.insert(phAsset)
+                    }
 
                     DispatchQueue.main.async {
-                        cell.loader.isHidden = false
-                        cell.loadView.isHidden = false
-                        cell.loader.progress?.completedUnitCount = Int64(proggress * 100)
-                        cell.loader.frame = indicator.frame
-                        cell.loadView.frame = cell.contentView.frame
-
-                        cell.bringSubviewToFront(cell.loadView)
-                        cell.bringSubviewToFront(cell.loader)
-                        
-                        self.doneButton.isEnabled = self.iCloudCollection.isEmpty
-//                        self.doneButton.ti
+                        if self.iCloudCollection.contains(phAsset) {
+                            cell.loader.isHidden = false
+                            cell.loadView.isHidden = false
+                            cell.loader.progress?.completedUnitCount = Int64(proggress * 100)
+                            cell.loader.frame = indicator.frame
+                            cell.loadView.frame = cell.contentView.frame
+                            
+                            cell.bringSubviewToFront(cell.loadView)
+                            cell.bringSubviewToFront(cell.loader)
+                            
+                            self.doneButton.isEnabled = self.iCloudCollection.isEmpty
+                        }
                     }
                     
                 }, completionBlock: { (img) in
-                    self.iCloudCollection.remove(phAsset)
 
                     DispatchQueue.main.async {
                         UIView.animate(withDuration: 0.3, animations: {
-                            if img != nil {
-                                cell.loader.state = .compleate
-                            } else {
-                                cell.loader.state = .fail(nil)
-                                self.decelect(cell: cell, asset: asset)
+                            if self.iCloudCollection.contains(phAsset) {
+                                
+                                if img != nil {
+                                    cell.loader.state = .compleate
+                                } else {
+                                    cell.loader.state = .fail(nil)
+                                    self.decelect(cell: cell, asset: asset)
+                                }
                             }
-
                             cell.loadView.isHidden = true
                         }, completion: { (_) in
-                            cell.loader.state = .hide
-
-//                            if img == nil {
-//                                self.decelect(cell: cell, asset: asset)
+//                            if cell.loader.state != CircleAnimationView.State.hide {
+                                cell.loader.state = .hide
 //                            }
+
+                            self.iCloudCollection.remove(phAsset)
                             self.doneButton.isEnabled = self.iCloudCollection.isEmpty
-//                            self.navigationItem.rightBarButtonItem?.isEnabled = self.iCloudCollection.isEmpty
                         })
                     }
                 }) {
