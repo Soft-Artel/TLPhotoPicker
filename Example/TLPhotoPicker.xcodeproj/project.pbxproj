@@ -238,7 +238,7 @@
 				TargetAttributes = {
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
-						DevelopmentTeam = RNR9A42JW9;
+						DevelopmentTeam = N8HNZL79H9;
 						LastSwiftMigration = 0820;
 					};
 				};
@@ -474,7 +474,7 @@
 			baseConfigurationReference = F047F54580DD32436AB0F8F6 /* Pods-TLPhotoPicker_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = RNR9A42JW9;
+				DEVELOPMENT_TEAM = N8HNZL79H9;
 				INFOPLIST_FILE = TLPhotoPicker/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
@@ -489,7 +489,7 @@
 			baseConfigurationReference = FF774390FCDE758A51AF70EF /* Pods-TLPhotoPicker_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = RNR9A42JW9;
+				DEVELOPMENT_TEAM = N8HNZL79H9;
 				INFOPLIST_FILE = TLPhotoPicker/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;

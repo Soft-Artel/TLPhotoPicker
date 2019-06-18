@@ -43,6 +43,8 @@ open class TLPhotoCollectionViewCell: UICollectionViewCell {
     @IBOutlet open var selectedHeight: NSLayoutConstraint?
     @IBOutlet open var orderLabel: UILabel?
     @IBOutlet open var orderBgView: UIView?
+    var loader = CircleAnimationView()
+    var loadView = UIView()
     
     var configure = TLPhotosPickerConfigure() {
         didSet {
@@ -148,8 +150,22 @@ open class TLPhotoCollectionViewCell: UICollectionViewCell {
 //        print("deinit TLPhotoCollectionViewCell")
     }
     
+    static var loadColor = UIColor.black.withAlphaComponent(0.5)
+    
     override open func awakeFromNib() {
         super.awakeFromNib()
+        
+        self.addSubview(self.loader)
+        self.addSubview(self.loadView)
+        self.loadView.frame = self.frame
+        
+        self.loadView.backgroundColor = TLPhotoCollectionViewCell.loadColor
+        
+        self.loader.state = .hide
+        
+        self.loader.isHidden = true
+        self.loadView.isHidden = true
+        
         self.playerView?.playerLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
         self.livePhotoView?.isHidden = true
         self.durationView?.isHidden = true
@@ -175,5 +191,6 @@ open class TLPhotoCollectionViewCell: UICollectionViewCell {
         self.durationView?.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.6)
         self.selectedHeight?.constant = 10
         self.selectedAsset = false
+        self.loader.isHidden = true
     }
 }
