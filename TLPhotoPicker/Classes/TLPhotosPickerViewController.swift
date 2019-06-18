@@ -122,6 +122,9 @@ open class TLPhotosPickerViewController: UIViewController {
     public var configure = TLPhotosPickerConfigure()
     public var customDataSouces: TLPhotopickerDataSourcesProtocol? = nil
     
+    public var allDone = false
+    private var iCloudCollection = Set<PHAsset>()
+    
     private var usedCameraButton: Bool {
         get {
             return self.configure.usedCameraButton
@@ -429,26 +432,37 @@ extension TLPhotosPickerViewController {
     
     private func dismiss(done: Bool) {
         if done {
-            #if swift(>=4.1)
-            self.delegate?.dismissPhotoPicker(withPHAssets: self.selectedAssets.compactMap{ $0.phAsset })
-            #else
-            self.delegate?.dismissPhotoPicker(withPHAssets: self.selectedAssets.flatMap{ $0.phAsset })
-            #endif
-            self.delegate?.dismissPhotoPicker(withTLPHAssets: self.selectedAssets)
-            self.completionWithTLPHAssets?(self.selectedAssets)
-            #if swift(>=4.1)
-            self.completionWithPHAssets?(self.selectedAssets.compactMap{ $0.phAsset })
-            #else
-            self.completionWithPHAssets?(self.selectedAssets.flatMap{ $0.phAsset })
-            #endif
-        }else {
+            if self.iCloudCollection.isEmpty {
+                #if swift(>=4.1)
+                self.delegate?.dismissPhotoPicker(withPHAssets: self.selectedAssets.compactMap{ $0.phAsset })
+                #else
+                self.delegate?.dismissPhotoPicker(withPHAssets: self.selectedAssets.flatMap{ $0.phAsset })
+                #endif
+                self.delegate?.dismissPhotoPicker(withTLPHAssets: self.selectedAssets)
+                self.completionWithTLPHAssets?(self.selectedAssets)
+                #if swift(>=4.1)
+                self.completionWithPHAssets?(self.selectedAssets.compactMap{ $0.phAsset })
+                #else
+                self.completionWithPHAssets?(self.selectedAssets.flatMap{ $0.phAsset })
+                #endif
+                
+                self.dismiss(animated: true) { [weak self] in
+                    self?.delegate?.dismissComplete()
+                    self?.dismissCompletion?()
+                }
+            }
+            
+        } else {
             self.delegate?.photoPickerDidCancel()
             self.didCancel?()
+            
+            self.dismiss(animated: true) { [weak self] in
+                self?.delegate?.dismissComplete()
+                self?.dismissCompletion?()
+            }
         }
-        self.dismiss(animated: true) { [weak self] in
-            self?.delegate?.dismissComplete()
-            self?.dismissCompletion?()
-        }
+        
+       
     }
     
     private func canSelect(phAsset: PHAsset) -> Bool {
@@ -790,8 +804,19 @@ extension TLPhotosPickerViewController: UICollectionViewDelegate,UICollectionVie
         }
         guard var asset = collection.getTLAsset(at: indexPath), let phAsset = asset.phAsset else { return }
         cell.popScaleAnim()
+        
         if let index = self.selectedAssets.firstIndex(where: { $0.phAsset == asset.phAsset }) {
         //deselect
+            DispatchQueue.main.async {
+                self.iCloudCollection.remove(phAsset)
+
+                cell.loader.state = .hide
+                cell.loader.isHidden = true
+                cell.loadView.isHidden = true
+                
+                self.doneButton.isEnabled = self.iCloudCollection.isEmpty
+            }
+            
             self.logDelegate?.deselectedPhoto(picker: self, at: indexPath.row)
             self.selectedAssets.remove(at: index)
             #if swift(>=4.1)
@@ -813,11 +838,61 @@ extension TLPhotosPickerViewController: UICollectionViewDelegate,UICollectionVie
             if self.playRequestID?.indexPath == indexPath {
                 stopPlay()
             }
-        }else {
+        } else {
         //select
             self.logDelegate?.selectedPhoto(picker: self, at: indexPath.row)
             guard !maxCheck() else { return }
             guard canSelect(phAsset: phAsset) else { return }
+            
+            if let indicator = cell.indicator {
+                
+                cell.loader.state = .progress(Progress(totalUnitCount: 100))
+
+                if let reqID = asset.cloudImageDownload(progressBlock: { (proggress) in
+                    self.iCloudCollection.insert(phAsset)
+
+                    DispatchQueue.main.async {
+                        cell.loader.isHidden = false
+                        cell.loadView.isHidden = false
+                        cell.loader.progress?.completedUnitCount = Int64(proggress * 100)
+                        cell.loader.frame = indicator.frame
+                        cell.loadView.frame = cell.contentView.frame
+
+                        cell.bringSubviewToFront(cell.loadView)
+                        cell.bringSubviewToFront(cell.loader)
+                        
+                        self.doneButton.isEnabled = self.iCloudCollection.isEmpty
+//                        self.doneButton.ti
+                    }
+                    
+                }, completionBlock: { (img) in
+                    self.iCloudCollection.remove(phAsset)
+
+                    DispatchQueue.main.async {
+                        UIView.animate(withDuration: 0.3, animations: {
+                            if img != nil {
+                                cell.loader.state = .compleate
+                            } else {
+                                cell.loader.state = .fail(nil)
+                                self.decelect(cell: cell, asset: asset)
+                            }
+
+                            cell.loadView.isHidden = true
+                        }, completion: { (_) in
+                            cell.loader.state = .hide
+
+//                            if img == nil {
+//                                self.decelect(cell: cell, asset: asset)
+//                            }
+                            self.doneButton.isEnabled = self.iCloudCollection.isEmpty
+//                            self.navigationItem.rightBarButtonItem?.isEnabled = self.iCloudCollection.isEmpty
+                        })
+                    }
+                }) {
+                    //reqID
+                }
+            }
+            
             asset.selectedOrder = self.selectedAssets.count + 1
             self.selectedAssets.append(asset)
             cell.selectedAsset = true
@@ -825,6 +900,34 @@ extension TLPhotosPickerViewController: UICollectionViewDelegate,UICollectionVie
             if asset.type != .photo, self.configure.autoPlay {
                 playVideo(asset: asset, indexPath: indexPath)
             }
+        }
+    }
+    
+    private func decelect(cell: TLPhotoCollectionViewCell, asset: TLPHAsset) {
+        
+        guard let index = self.selectedAssets.firstIndex(of: asset),
+            let indexPath = self.collectionView.indexPath(for: cell) else { return }
+        
+        self.logDelegate?.deselectedPhoto(picker: self, at: indexPath.row)
+        self.selectedAssets.remove(at: index)
+        #if swift(>=4.1)
+        self.selectedAssets = self.selectedAssets.enumerated().compactMap({ (offset,asset) -> TLPHAsset? in
+            var asset = asset
+            asset.selectedOrder = offset + 1
+            return asset
+        })
+        #else
+        self.selectedAssets = self.selectedAssets.enumerated().flatMap({ (offset,asset) -> TLPHAsset? in
+            var asset = asset
+            asset.selectedOrder = offset + 1
+            return asset
+        })
+        #endif
+        cell.selectedAsset = false
+        cell.stopPlay()
+        self.orderUpdateCells()
+        if self.playRequestID?.indexPath == indexPath {
+            stopPlay()
         }
     }
     
