@@ -61,6 +61,8 @@
 		2E7F3474237ACE59001E4274 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/TLPhotosPickerViewController.strings; sourceTree = "<group>"; };
 		2E7F347C237AD07F001E4274 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2E7F347E237AD082001E4274 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		2E7F347F237AD6F3001E4274 /* ru-RU */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "ru-RU"; path = "ru-RU.lproj/TLPhotosPickerViewController.strings"; sourceTree = "<group>"; };
+		2E7F3480237AD6F3001E4274 /* ru-RU */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "ru-RU"; path = "ru-RU.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		2ED1AA4822B8E915000B1530 /* Loader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loader.swift; sourceTree = "<group>"; };
 		33D0B123B1A3E37D101C007C5605E05B /* Pods-TLPhotoPicker_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-TLPhotoPicker_Example-dummy.m"; sourceTree = "<group>"; };
 		37DB733B9137DE673D90B615F1113644 /* ResourceBundle-TLPhotoPicker-TLPhotoPicker-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ResourceBundle-TLPhotoPicker-TLPhotoPicker-Info.plist"; sourceTree = "<group>"; };
@@ -352,6 +354,7 @@
 				en,
 				Base,
 				ru,
+				"ru-RU",
 			);
 			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
 			productRefGroup = 0426550C5C071A5DC68E20530F247B56 /* Products */;
@@ -456,6 +459,7 @@
 				2E7F3470237ACE37001E4274 /* Base */,
 				2E7F3473237ACE47001E4274 /* en */,
 				2E7F3474237ACE59001E4274 /* ru */,
+				2E7F347F237AD6F3001E4274 /* ru-RU */,
 			);
 			name = TLPhotosPickerViewController.xib;
 			path = TLPhotoPicker/Classes;
@@ -466,6 +470,7 @@
 			children = (
 				2E7F347C237AD07F001E4274 /* en */,
 				2E7F347E237AD082001E4274 /* ru */,
+				2E7F3480237AD6F3001E4274 /* ru-RU */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
