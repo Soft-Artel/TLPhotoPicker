@@ -9,10 +9,13 @@
 /* Begin PBXBuildFile section */
 		0BB2A91C83BC079334687FB84151BDB9 /* TLCollectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B02482C45A6198FB37C7B6B24E2FD6B4 /* TLCollectionTableViewCell.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		2283230B5625CC46E7FC24AD23EE0501 /* TLAssetCollection+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE0CD1B3C88D41C2759DEA2552A946A /* TLAssetCollection+Extension.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		22D58B567F9717FFC59CD716C662426F /* TLPhotosPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83633C3BE1C3CACDE65E7D325F43902B /* TLPhotosPickerViewController.xib */; };
 		28643EC4FAFACA2BB28E072DEE94F13C /* TLCollectionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0DAF2ABF719073C517E521CBA0FDAE9C /* TLCollectionTableViewCell.xib */; };
 		28A9C911DC04C5246DD19BAE64805C69 /* TLPhotosPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62921AD4988FD3C1CE9068FD348E4B63 /* TLPhotosPickerViewController.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		2C4FF86C4CE2909A1931571866A324D6 /* TLPhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD66BDF53641D394BC2DA4223BD3D149 /* TLPhotoCollectionViewCell.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		2E7F346F237ACE37001E4274 /* TLPhotosPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2E7F3471237ACE37001E4274 /* TLPhotosPickerViewController.xib */; };
+		2E7F3479237AD07F001E4274 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2E7F347D237AD07F001E4274 /* Localizable.strings */; };
+		2E7F347A237AD07F001E4274 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2E7F347D237AD07F001E4274 /* Localizable.strings */; };
+		2E7F347B237AD07F001E4274 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2E7F347D237AD07F001E4274 /* Localizable.strings */; };
 		2ED1AA4A22B8E968000B1530 /* Loader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED1AA4822B8E915000B1530 /* Loader.swift */; };
 		4271D25DE4A9B7488FAB6248267297B6 /* TLPhotoPicker-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 5F87FC9306272805D2E250D6BEC4920D /* TLPhotoPicker-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		757688C16D500E406C2617F7A36B4BA3 /* Pods-TLPhotoPicker_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 33D0B123B1A3E37D101C007C5605E05B /* Pods-TLPhotoPicker_Example-dummy.m */; };
@@ -53,6 +56,11 @@
 		0DAF2ABF719073C517E521CBA0FDAE9C /* TLCollectionTableViewCell.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; name = TLCollectionTableViewCell.xib; path = TLPhotoPicker/Classes/TLCollectionTableViewCell.xib; sourceTree = "<group>"; };
 		12AE701B5E427B7886EF3D5A205C0D47 /* TLPhotoPicker-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "TLPhotoPicker-dummy.m"; sourceTree = "<group>"; };
 		29D64499552246DEF200245951B7D626 /* TLPhotoPicker-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "TLPhotoPicker-Info.plist"; sourceTree = "<group>"; };
+		2E7F3470237ACE37001E4274 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/TLPhotosPickerViewController.xib; sourceTree = "<group>"; };
+		2E7F3473237ACE47001E4274 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/TLPhotosPickerViewController.strings; sourceTree = "<group>"; };
+		2E7F3474237ACE59001E4274 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/TLPhotosPickerViewController.strings; sourceTree = "<group>"; };
+		2E7F347C237AD07F001E4274 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		2E7F347E237AD082001E4274 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2ED1AA4822B8E915000B1530 /* Loader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loader.swift; sourceTree = "<group>"; };
 		33D0B123B1A3E37D101C007C5605E05B /* Pods-TLPhotoPicker_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-TLPhotoPicker_Example-dummy.m"; sourceTree = "<group>"; };
 		37DB733B9137DE673D90B615F1113644 /* ResourceBundle-TLPhotoPicker-TLPhotoPicker-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ResourceBundle-TLPhotoPicker-TLPhotoPicker-Info.plist"; sourceTree = "<group>"; };
@@ -68,7 +76,6 @@
 		6692D562BEEFD5EC08C8787508277890 /* TLPhotoCollectionViewCell.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; name = TLPhotoCollectionViewCell.xib; path = TLPhotoPicker/Classes/TLPhotoCollectionViewCell.xib; sourceTree = "<group>"; };
 		7A321D70C42B4C687CC609DF2FEE3EB2 /* Pods-TLPhotoPicker_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-TLPhotoPicker_Example.release.xcconfig"; sourceTree = "<group>"; };
 		7FE0CD1B3C88D41C2759DEA2552A946A /* TLAssetCollection+Extension.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "TLAssetCollection+Extension.swift"; path = "TLPhotoPicker/Classes/TLAssetCollection+Extension.swift"; sourceTree = "<group>"; };
-		83633C3BE1C3CACDE65E7D325F43902B /* TLPhotosPickerViewController.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; name = TLPhotosPickerViewController.xib; path = TLPhotoPicker/Classes/TLPhotosPickerViewController.xib; sourceTree = "<group>"; };
 		84AC5A45966A4F2670BAD3779D540993 /* TLPhotoPicker.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TLPhotoPicker.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		880C8D335C9F66D711E179E2E50C6DEC /* TLPhotoPicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TLPhotoPicker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
@@ -148,7 +155,7 @@
 				0DAF2ABF719073C517E521CBA0FDAE9C /* TLCollectionTableViewCell.xib */,
 				6692D562BEEFD5EC08C8787508277890 /* TLPhotoCollectionViewCell.xib */,
 				6459E38717FB6E7A1B4BAD816900575E /* TLPhotoPickerController.bundle */,
-				83633C3BE1C3CACDE65E7D325F43902B /* TLPhotosPickerViewController.xib */,
+				2E7F3471237ACE37001E4274 /* TLPhotosPickerViewController.xib */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -203,6 +210,7 @@
 				E1BE5ED9C6B398EE83BEA983F1586E23 /* LICENSE */,
 				A89587B3BFF4BBD80F495A1B4CC3A479 /* README.md */,
 				55F79631281CFED5A57D040C1CE6D38B /* TLPhotoPicker.podspec */,
+				2E7F347D237AD07F001E4274 /* Localizable.strings */,
 			);
 			name = Pod;
 			sourceTree = "<group>";
@@ -343,6 +351,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ru,
 			);
 			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
 			productRefGroup = 0426550C5C071A5DC68E20530F247B56 /* Products */;
@@ -362,8 +371,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				28643EC4FAFACA2BB28E072DEE94F13C /* TLCollectionTableViewCell.xib in Resources */,
+				2E7F347B237AD07F001E4274 /* Localizable.strings in Resources */,
 				E7DE7D047FDE3394496393C4EC366A74 /* TLPhotoCollectionViewCell.xib in Resources */,
-				22D58B567F9717FFC59CD716C662426F /* TLPhotosPickerViewController.xib in Resources */,
+				2E7F346F237ACE37001E4274 /* TLPhotosPickerViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -372,6 +382,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F532958B84C8155B275980BD20143149 /* TLPhotoPicker.bundle in Resources */,
+				2E7F347A237AD07F001E4274 /* Localizable.strings in Resources */,
 				9A88DD1C5266646DF118E820B8ED3A13 /* TLPhotoPickerController.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -380,6 +391,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2E7F3479237AD07F001E4274 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -436,6 +448,29 @@
 			targetProxy = AC500622FF15D69B6E34F066F8D1FF55 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		2E7F3471237ACE37001E4274 /* TLPhotosPickerViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2E7F3470237ACE37001E4274 /* Base */,
+				2E7F3473237ACE47001E4274 /* en */,
+				2E7F3474237ACE59001E4274 /* ru */,
+			);
+			name = TLPhotosPickerViewController.xib;
+			path = TLPhotoPicker/Classes;
+			sourceTree = "<group>";
+		};
+		2E7F347D237AD07F001E4274 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2E7F347C237AD07F001E4274 /* en */,
+				2E7F347E237AD082001E4274 /* ru */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		12499253E36FE41F6A242ABB5E3009C5 /* Release */ = {
@@ -542,6 +577,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -606,6 +642,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";

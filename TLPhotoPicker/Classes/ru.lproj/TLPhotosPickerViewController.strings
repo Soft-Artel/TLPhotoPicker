@@ -1,0 +1,15 @@
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "7qj-q4-rHC"; */
+"7qj-q4-rHC.text" = "Label";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "DON-iU-Cox"; */
+"DON-iU-Cox.text" = "Label";
+
+/* Class = "UIBarButtonItem"; title = "Done"; ObjectID = "daA-Ag-vVv"; */
+"daA-Ag-vVv.title" = "Готово";
+
+/* Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "sqJ-Z7-zxj"; */
+"sqJ-Z7-zxj.title" = "Отмена";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "xuG-bc-Oq9"; */
+"xuG-bc-Oq9.text" = "Label";
