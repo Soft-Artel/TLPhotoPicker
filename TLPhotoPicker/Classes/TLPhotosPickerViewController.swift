@@ -51,10 +51,10 @@ extension TLPhotosPickerLogDelegate {
 
 public struct TLPhotosPickerConfigure {
     public var customLocalizedTitle: [String: String] = ["Camera Roll": "Camera Roll"]
-    public var tapHereToChange = "Tap here to change"
-    public var cancelTitle = "Cancel"
-    public var doneTitle = "Done"
-    public var emptyMessage = "No albums"
+    public var tapHereToChange = NSLocalizedString("Tap here to change", comment: "")
+    public var cancelTitle = NSLocalizedString("Cancel", comment: "")
+    public var doneTitle = NSLocalizedString("Done", comment: "")
+    public var emptyMessage = NSLocalizedString("No albums", comment: "")
     public var emptyImage: UIImage? = nil
     public var usedCameraButton = true
     public var usedPrefetch = false
