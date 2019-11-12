@@ -242,11 +242,21 @@ public struct TLPHAsset {
     // parmeter : convertLivePhotosToJPG
     // false : If you want mov file at live photos
     // true  : If you want png file at live photos ( HEIC )
-    public func tempCopyMediaFile(videoRequestOptions: PHVideoRequestOptions? = nil, imageRequestOptions: PHImageRequestOptions? = nil, exportPreset: String = AVAssetExportPresetHighestQuality, convertLivePhotosToJPG: Bool = false, progressBlock:((Double) -> Void)? = nil, completionBlock:@escaping ((URL,String) -> Void)) -> PHImageRequestID?
-    //Apparently, this method is not be safety to export a video.
+    public func tempCopyMediaFile(videoRequestOptions: PHVideoRequestOptions? = nil, 
+                                  imageRequestOptions: PHImageRequestOptions? = nil,
+                                  livePhotoRequestOptions: PHLivePhotoRequestOptions? = nil,
+                                  exportPreset: String = AVAssetExportPresetHighestQuality, 
+                                  convertLivePhotosToJPG: Bool = false, 
+                                  progressBlock:((Double) -> Void)? = nil, 
+                                  completionBlock:@escaping ((URL,String) -> Void)) -> PHImageRequestID?
+    //Apparently, This is not the only way to export video.
     //There is many way that export a video.
     //This method was one of them.
-    public func exportVideoFile(options: PHVideoRequestOptions? = nil, progressBlock:((Float) -> Void)? = nil, completionBlock:@escaping ((URL,String) -> Void))
+    public func exportVideoFile(options: PHVideoRequestOptions? = nil,
+                                outputURL: URL? = nil,
+                                outputFileType: AVFileType = .mov,
+                                progressBlock:((Double) -> Void)? = nil,
+                                completionBlock:@escaping ((URL,String) -> Void))
     // get original asset file name
     public var originalFileName: String?
 }
@@ -263,7 +273,7 @@ var configure = TLPhotosPickerConfigure()
 viewController.configure = configure
 
 public struct TLPhotosPickerConfigure {
-    public var defaultCameraRollTitle = "Camera Roll"
+    public var customLocalizedTitle: [String: String] = ["Camera Roll": "Camera Roll"] // Set [:] if you want use default localized title of album
     public var tapHereToChange = "Tap here to change"
     public var cancelTitle = "Cancel"
     public var doneTitle = "Done"
@@ -284,6 +294,7 @@ public struct TLPhotosPickerConfigure {
     public var singleSelectedMode = false
     public var maxSelectedAssets: Int? = nil //default: inf
     public var fetchOption: PHFetchOptions? = nil //default: creationDate
+    public var fetchCollectionOption: [FetchCollectionType: PHFetchOptions] = [:] 
     public var singleSelectedMode = false
     public var selectedColor = UIColor(red: 88/255, green: 144/255, blue: 255/255, alpha: 1.0)
     public var cameraBgColor = UIColor(red: 221/255, green: 223/255, blue: 226/255, alpha: 1)
@@ -295,8 +306,26 @@ public struct TLPhotosPickerConfigure {
     public var fetchCollectionTypes: [(PHAssetCollectionType,PHAssetCollectionSubtype)]? = nil
     public var groupByFetch: PHFetchedResultGroupedBy? = nil // cannot be used prefetch options
     public var supportedInterfaceOrientations: UIInterfaceOrientationMask = .portrait
+    public var popup: [PopupConfigure] = []
     public init() {
     }
+}
+
+//Related issue: https://github.com/tilltue/TLPhotoPicker/issues/201
+//e.g.
+//let option = PHFetchOptions()
+//configure.fetchCollectionOption[.assetCollections(.smartAlbum)] = option
+//configure.fetchCollectionOption[.assetCollections(.album)] = option
+//configure.fetchCollectionOption[.topLevelUserCollections] = option
+
+public enum FetchCollectionType {
+    case assetCollections(PHAssetCollectionType)
+    case topLevelUserCollections
+}
+
+public enum PopupConfigure {
+    //Popup album view animation duration
+    case animation(TimeInterval)
 }
 
 // PHFetchedResultGroupedBy
