@@ -191,7 +191,48 @@ open class TLPhotosPickerViewController: UIViewController {
     private var thumbnailSize = CGSize.zero
     private var placeholderThumbnail: UIImage? = nil
     private var cameraImage: UIImage? = nil
-    
+
+    public var btnColor: UIColor = UIColor(red: 0, green: 143 / 255, blue: 174 / 255, alpha: 1.0)
+    public var headerBackgroundColor: UIColor = .white
+    public var colleactionViewBackgroundColor: UIColor = .white
+    public var headerColor: UIColor = .lightGray
+
+    public var tapHereToChange: String{
+        get{
+            self.configure.tapHereToChange
+        }
+        set{
+            self.tapHereToChange = newValue
+        }
+    }
+    public var cancelTitle: String{
+        get{
+            self.configure.cancelTitle
+        }
+        set{
+            self.cancelTitle = newValue
+        }
+    }
+    public var doneTitle: String{
+        get{
+            self.configure.doneTitle
+        }
+        set{
+            self.doneTitle = newValue
+        }
+    }
+    public var emptyMessage: String{
+        get{
+            self.configure.emptyMessage
+        }
+        set{
+            self.emptyMessage = newValue
+        }
+    }
+
+
+    public var systemColors: Bool = false
+
     deinit {
         //print("deinit TLPhotosPickerViewController")
         PHPhotoLibrary.shared().unregisterChangeObserver(self)
@@ -200,7 +241,7 @@ open class TLPhotosPickerViewController: UIViewController {
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     public init() {
         super.init(nibName: "TLPhotosPickerViewController", bundle: TLBundle.bundle())
     }
@@ -223,7 +264,7 @@ open class TLPhotosPickerViewController: UIViewController {
     
     open override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        if #available(iOS 13.0, *) {
+        if #available(iOS 13.0, *), self.systemColors {
             let userInterfaceStyle = self.traitCollection.userInterfaceStyle
             let image = TLBundle.podBundleImage(named: "pop_arrow")
             if userInterfaceStyle.rawValue == 2 {
@@ -369,13 +410,16 @@ extension TLPhotosPickerViewController {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(titleTap))
         self.titleView.addGestureRecognizer(tapGesture)
         self.titleLabel.text = self.configure.customLocalizedTitle["Camera Roll"]
-        self.subTitleLabel.text = self.configure.tapHereToChange
-        self.cancelButton.title = self.configure.cancelTitle
-        self.doneButton.title = self.configure.doneTitle
-        self.doneButton.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: UIFont.labelFontSize)], for: .normal)
+        self.titleLabel.textColor = self.headerColor
+        self.subTitleLabel.text = self.tapHereToChange
+        self.subTitleLabel.textColor = self.headerColor
+        self.cancelButton.title = self.cancelTitle
+        self.cancelButton.tintColor = self.btnColor
+        self.doneButton.title = self.doneTitle
+        self.doneButton.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: UIFont.labelFontSize), NSAttributedString.Key.foregroundColor: self.btnColor], for: .normal)
         self.emptyView.isHidden = true
         self.emptyImageView.image = self.configure.emptyImage
-        self.emptyMessageLabel.text = self.configure.emptyMessage
+        self.emptyMessageLabel.text = self.emptyMessage
         self.albumPopView.tableView.delegate = self
         self.albumPopView.tableView.dataSource = self
         self.popArrowImageView.image = TLBundle.podBundleImage(named: "pop_arrow")
@@ -391,6 +435,12 @@ extension TLPhotosPickerViewController {
             self.allowedLivePhotos = false
         }
         self.customDataSouces?.registerSupplementView(collectionView: self.collectionView)
+
+        if !self.systemColors{
+            self.navigationBar.backgroundColor = self.headerBackgroundColor
+            self.collectionView.backgroundColor = self.colleactionViewBackgroundColor
+            self.view.backgroundColor = self.colleactionViewBackgroundColor
+        }
     }
     
     private func updateTitle() {
@@ -1305,5 +1355,11 @@ extension UIImage {
         }
         UIGraphicsEndImageContext()
         return result ?? self
+    }
+}
+
+extension String{
+    var localized: String {
+        return NSLocalizedString(self, comment: "")
     }
 }
