@@ -197,38 +197,10 @@ open class TLPhotosPickerViewController: UIViewController {
     public var colleactionViewBackgroundColor: UIColor = .yellow//white
     public var headerColor: UIColor = .blue//lightGray
     public var barStyle: UIBarStyle = .default
-    public var tapHereToChange: String{
-        get{
-            self.configure.tapHereToChange
-        }
-        set{
-            self.tapHereToChange = newValue
-        }
-    }
-    public var cancelTitle: String{
-        get{
-            self.configure.cancelTitle
-        }
-        set{
-            self.cancelTitle = newValue
-        }
-    }
-    public var doneTitle: String{
-        get{
-            self.configure.doneTitle
-        }
-        set{
-            self.doneTitle = newValue
-        }
-    }
-    public var emptyMessage: String{
-        get{
-            self.configure.emptyMessage
-        }
-        set{
-            self.emptyMessage = newValue
-        }
-    }
+    public var tapHereToChange: String?
+    public var cancelTitle: String?
+    public var doneTitle: String?
+    public var emptyMessage: String?
 
 
     public var systemColors: Bool = false
@@ -295,6 +267,13 @@ open class TLPhotosPickerViewController: UIViewController {
         self.albumPopView.popupView.backgroundColor = self.colleactionViewBackgroundColor
         self.albumPopView.tableView.backgroundColor = self.colleactionViewBackgroundColor
         self.albumPopView.tableView.visibleCells.forEach{$0.backgroundColor = self.colleactionViewBackgroundColor}
+    }
+
+    public func changeTitles(){
+        self.emptyMessageLabel.text = self.emptyMessage ?? self.configure.emptyMessage
+        self.subTitleLabel.text = self.tapHereToChange ?? self.configure.tapHereToChange
+        self.cancelButton.title = self.cancelTitle ?? self.configure.cancelTitle
+        self.doneButton.title = self.doneTitle ?? self.configure.doneTitle
     }
     
     func checkAuthorization() {
@@ -424,15 +403,11 @@ extension TLPhotosPickerViewController {
         self.titleView.addGestureRecognizer(tapGesture)
         self.titleLabel.text = self.configure.customLocalizedTitle["Camera Roll"]
         self.titleLabel.textColor = self.headerColor
-        self.subTitleLabel.text = self.tapHereToChange
         self.subTitleLabel.textColor = self.headerColor
-        self.cancelButton.title = self.cancelTitle
         self.cancelButton.tintColor = self.btnColor
-        self.doneButton.title = self.doneTitle
         self.doneButton.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: UIFont.labelFontSize), NSAttributedString.Key.foregroundColor: self.btnColor], for: .normal)
         self.emptyView.isHidden = true
         self.emptyImageView.image = self.configure.emptyImage
-        self.emptyMessageLabel.text = self.emptyMessage
         self.albumPopView.tableView.delegate = self
         self.albumPopView.tableView.dataSource = self
         self.popArrowImageView.image = TLBundle.podBundleImage(named: "pop_arrow")

@@ -27,7 +27,10 @@ class ViewController: UIViewController,TLPhotosPickerViewControllerDelegate {
         viewController.configure = configure
         viewController.selectedAssets = self.selectedAssets
         viewController.logDelegate = self
-
+        viewController.emptyMessage = "a"
+        viewController.tapHereToChange = "b"
+        viewController.cancelTitle = "f"
+        viewController.doneTitle = "r"
         self.present(viewController, animated: true, completion: nil)
     }
     
