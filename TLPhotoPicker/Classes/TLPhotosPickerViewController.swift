@@ -204,7 +204,7 @@ open class TLPhotosPickerViewController: UIViewController {
 
     public var isDark: Bool = false
     public var systemColors: Bool = false
-
+//
     deinit {
         //print("deinit TLPhotosPickerViewController")
         PHPhotoLibrary.shared().unregisterChangeObserver(self)
