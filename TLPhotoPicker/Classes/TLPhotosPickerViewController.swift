@@ -192,11 +192,11 @@ open class TLPhotosPickerViewController: UIViewController {
     private var placeholderThumbnail: UIImage? = nil
     private var cameraImage: UIImage? = nil
 
-    public var btnColor: UIColor = UIColor(red: 0, green: 143 / 255, blue: 174 / 255, alpha: 1.0)
-    public var headerBackgroundColor: UIColor = .white
-    public var colleactionViewBackgroundColor: UIColor = .white
-    public var headerColor: UIColor = .lightGray
-
+    public var btnColor: UIColor = .red//UIColor(red: 0, green: 143 / 255, blue: 174 / 255, alpha: 1.0)
+    public var headerBackgroundColor: UIColor = .green//.white
+    public var colleactionViewBackgroundColor: UIColor = .yellow//white
+    public var headerColor: UIColor = .blue//lightGray
+    public var barStyle: UIBarStyle = .default
     public var tapHereToChange: String{
         get{
             self.configure.tapHereToChange
@@ -283,6 +283,19 @@ open class TLPhotosPickerViewController: UIViewController {
         super.didReceiveMemoryWarning()
         self.stopPlay()
     }
+
+    public func changeColors(){
+        self.view.backgroundColor = self.colleactionViewBackgroundColor
+        self.collectionView.backgroundColor = self.colleactionViewBackgroundColor
+        self.navigationBar.barStyle = self.barStyle
+        self.titleLabel.textColor = self.btnColor
+        self.subTitleLabel.textColor = self.btnColor
+        self.navigationBar.tintColor = self.btnColor
+        self.popArrowImageView.image = TLBundle.podBundleImage(named: "pop_arrow")?.colorMask(color: self.headerBackgroundColor)
+        self.albumPopView.popupView.backgroundColor = self.colleactionViewBackgroundColor
+        self.albumPopView.tableView.backgroundColor = self.colleactionViewBackgroundColor
+        self.albumPopView.tableView.visibleCells.forEach{$0.backgroundColor = self.colleactionViewBackgroundColor}
+    }
     
     func checkAuthorization() {
         switch PHPhotoLibrary.authorizationStatus() {
@@ -328,7 +341,7 @@ open class TLPhotosPickerViewController: UIViewController {
             initPhotoLibrary()
         }
     }
-    
+
     private func findIndexAndReloadCells(phAsset: PHAsset) {
         if
             self.configure.groupByFetch != nil,

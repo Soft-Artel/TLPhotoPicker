@@ -13,6 +13,7 @@ class CustomPhotoPickerViewController: TLPhotosPickerViewController {
     override func makeUI() {
         super.makeUI()
         self.customNavItem.leftBarButtonItem = UIBarButtonItem.init(barButtonSystemItem: .stop, target: nil, action: #selector(customAction))
+        self.changeColors()
     }
     @objc func customAction() {
         self.delegate?.photoPickerDidCancel()
