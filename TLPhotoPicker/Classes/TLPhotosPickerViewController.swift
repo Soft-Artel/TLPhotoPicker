@@ -192,9 +192,9 @@ open class TLPhotosPickerViewController: UIViewController {
     private var placeholderThumbnail: UIImage? = nil
     private var cameraImage: UIImage? = nil
 
-    public var btnColor: UIColor = .red//UIColor(red: 0, green: 143 / 255, blue: 174 / 255, alpha: 1.0)
-    public var headerBackgroundColor: UIColor = .green//.white
-    public var colleactionViewBackgroundColor: UIColor = .yellow//white
+    public var btnColor: UIColor = UIColor(red: 0, green: 143 / 255, blue: 174 / 255, alpha: 1.0)
+    public var headerBackgroundColor: UIColor = .clear
+    public var colleactionViewBackgroundColor: UIColor = .clear
     public var headerColor: UIColor = .blue//lightGray
     public var barStyle: UIBarStyle = .default
     public var tapHereToChange: String?
@@ -202,7 +202,7 @@ open class TLPhotosPickerViewController: UIViewController {
     public var doneTitle: String?
     public var emptyMessage: String?
 
-
+    public var isDark: Bool = false
     public var systemColors: Bool = false
 
     deinit {
@@ -299,6 +299,9 @@ open class TLPhotosPickerViewController: UIViewController {
     
     override open func viewDidLoad() {
         super.viewDidLoad()
+        if #available(iOS 13.0, *){
+            self.overrideUserInterfaceStyle = isDark ? .dark : .light
+        }
         makeUI()
         checkAuthorization()
     }

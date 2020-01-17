@@ -31,6 +31,7 @@ class ViewController: UIViewController,TLPhotosPickerViewControllerDelegate {
         viewController.tapHereToChange = "b"
         viewController.cancelTitle = "f"
         viewController.doneTitle = "r"
+        viewController.isDark = true
         self.present(viewController, animated: true, completion: nil)
     }
     
