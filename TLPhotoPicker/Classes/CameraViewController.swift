@@ -17,7 +17,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     var windowOrientation: UIInterfaceOrientation {
         return view.window?.windowScene?.interfaceOrientation ?? .unknown
     }
-    
+        
     // MARK: View Controller Life Cycle
     
     override func viewDidLoad() {
@@ -36,6 +36,8 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         
         // Set up the video preview view.
         previewView.session = session
+        
+        self.addIcons()
         /*
          Check the video authorization status. Video access is required and audio
          access is optional. If the user denies audio access, AVCam won't
@@ -86,6 +88,39 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
             self.spinner.color = UIColor.yellow
             self.previewView.addSubview(self.spinner)
         }
+    }
+    
+    func addIcons(){
+        let capturePhoto = TLBundle.podBundleImage(named: "CapturePhoto")?.withRenderingMode(.alwaysTemplate)
+        self.photoButton.setImage(capturePhoto, for: .normal)
+        self.photoButton.tintColor = .red
+        
+        let captureVideo = TLBundle.podBundleImage(named: "CaptureVideo")?.withRenderingMode(.alwaysTemplate)
+        self.recordButton.setImage(captureVideo, for: .normal)
+        self.recordButton.tintColor = .red
+        
+        let depthON = TLBundle.podBundleImage(named: "DepthON")?.withRenderingMode(.alwaysTemplate)
+        self.depthDataDeliveryButton.setImage(depthON, for: .normal)
+        self.depthDataDeliveryButton.tintColor = .red
+        
+        let flipCamera = TLBundle.podBundleImage(named: "FlipCamera")?.withRenderingMode(.alwaysTemplate)
+        self.cameraButton.setImage(flipCamera, for: .normal)
+        self.cameraButton.tintColor = .red
+        
+        let livePhotoON = TLBundle.podBundleImage(named: "LivePhotoON")?.withRenderingMode(.alwaysTemplate)
+        self.livePhotoModeButton.setImage(livePhotoON, for: .normal)
+        self.livePhotoModeButton.tintColor = .red
+        
+        let movieSelector = TLBundle.podBundleImage(named: "MovieSelector")?.withRenderingMode(.alwaysTemplate)
+        self.captureModeControl.setImage(movieSelector, forSegmentAt: 1)
+        self.captureModeControl.tintColor = .red
+        let photoSelector = TLBundle.podBundleImage(named: "PhotoSelector")?.withRenderingMode(.alwaysTemplate)
+        self.captureModeControl.setImage(photoSelector, forSegmentAt: 0)
+
+        let portraitMatteON = TLBundle.podBundleImage(named: "PortraitMatteON")?.withRenderingMode(.alwaysTemplate)
+        self.portraitEffectsMatteDeliveryButton.setImage(portraitMatteON, for: .normal)
+        self.portraitEffectsMatteDeliveryButton.tintColor = .red
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -693,9 +728,8 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
                         self.spinner.stopAnimating()
                     }
                 }
-            }
+            }, parentVC: self
             )
-            
             // The photo output holds a weak reference to the photo capture delegate and stores it in an array to maintain a strong reference.
             self.inProgressPhotoCaptureDelegates[photoCaptureProcessor.requestedPhotoSettings.uniqueID] = photoCaptureProcessor
             self.photoOutput.capturePhoto(with: photoSettings, delegate: photoCaptureProcessor)
@@ -730,7 +764,8 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
                 if livePhotoMode == .on {
                     self.livePhotoModeButton.setImage(#imageLiteral(resourceName: "LivePhotoON"), for: [])
                 } else {
-                    self.livePhotoModeButton.setImage(#imageLiteral(resourceName: "LivePhotoOFF"), for: [])
+                    let livePhotoOFF = TLBundle.podBundleImage(named: "LivePhotoOFF")
+                    self.livePhotoModeButton.setImage(livePhotoOFF, for: [])
                 }
             }
         }
@@ -752,12 +787,16 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
             
             DispatchQueue.main.async {
                 if depthDataDeliveryMode == .on {
-                    self.depthDataDeliveryButton.setImage(#imageLiteral(resourceName: "DepthON"), for: [])
-                    self.portraitEffectsMatteDeliveryButton.setImage(#imageLiteral(resourceName: "PortraitMatteON"), for: [])
+                    let depthON = TLBundle.podBundleImage(named: "DepthON")
+                    self.depthDataDeliveryButton.setImage(depthON, for: [])
+                    let portraitMatteON = TLBundle.podBundleImage(named: "PortraitMatteON")
+                    self.portraitEffectsMatteDeliveryButton.setImage(portraitMatteON, for: [])
                     self.semanticSegmentationMatteDeliveryButton.isEnabled = true
                 } else {
-                    self.depthDataDeliveryButton.setImage(#imageLiteral(resourceName: "DepthOFF"), for: [])
-                    self.portraitEffectsMatteDeliveryButton.setImage(#imageLiteral(resourceName: "PortraitMatteOFF"), for: [])
+                    let depthOFF = TLBundle.podBundleImage(named: "DepthOFF")
+                    self.depthDataDeliveryButton.setImage(depthOFF, for: [])
+                    let portraitMatteOFF = TLBundle.podBundleImage(named: "PortraitMatteOFF")
+                    self.portraitEffectsMatteDeliveryButton.setImage(portraitMatteOFF, for: [])
                     self.semanticSegmentationMatteDeliveryButton.isEnabled = false
                 }
             }
@@ -904,7 +943,8 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         // Enable the Record button to let the user stop recording.
         DispatchQueue.main.async {
             self.recordButton.isEnabled = true
-            self.recordButton.setImage(#imageLiteral(resourceName: "CaptureStop"), for: [])
+            let captureStop = TLBundle.podBundleImage(named: "CaptureStop")
+            self.recordButton.setImage(captureStop, for: [])
         }
     }
     

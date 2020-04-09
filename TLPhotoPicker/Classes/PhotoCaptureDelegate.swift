@@ -32,16 +32,20 @@ class PhotoCaptureProcessor: NSObject {
     
     private var maxPhotoProcessingTime: CMTime?
     
+    private var vc: UIViewController
+    
     init(with requestedPhotoSettings: AVCapturePhotoSettings,
          willCapturePhotoAnimation: @escaping () -> Void,
          livePhotoCaptureHandler: @escaping (Bool) -> Void,
          completionHandler: @escaping (PhotoCaptureProcessor) -> Void,
-         photoProcessingHandler: @escaping (Bool) -> Void) {
+         photoProcessingHandler: @escaping (Bool) -> Void,
+         parentVC: UIViewController) {
         self.requestedPhotoSettings = requestedPhotoSettings
         self.willCapturePhotoAnimation = willCapturePhotoAnimation
         self.livePhotoCaptureHandler = livePhotoCaptureHandler
         self.completionHandler = completionHandler
         self.photoProcessingHandler = photoProcessingHandler
+        self.vc = parentVC
     }
     
     private func didFinish() {
@@ -195,49 +199,56 @@ extension PhotoCaptureProcessor: AVCapturePhotoCaptureDelegate {
             return
         }
         
-        PHPhotoLibrary.requestAuthorization { status in
-            if status == .authorized {
-                PHPhotoLibrary.shared().performChanges({
-                    let options = PHAssetResourceCreationOptions()
-                    let creationRequest = PHAssetCreationRequest.forAsset()
-                    options.uniformTypeIdentifier = self.requestedPhotoSettings.processedFileType.map { $0.rawValue }
-                    creationRequest.addResource(with: .photo, data: photoData, options: options)
-                    
-                    if let livePhotoCompanionMovieURL = self.livePhotoCompanionMovieURL {
-                        let livePhotoCompanionMovieFileOptions = PHAssetResourceCreationOptions()
-                        livePhotoCompanionMovieFileOptions.shouldMoveFile = true
-                        creationRequest.addResource(with: .pairedVideo,
-                                                    fileURL: livePhotoCompanionMovieURL,
-                                                    options: livePhotoCompanionMovieFileOptions)
-                    }
-                    
-                    // Save Portrait Effects Matte to Photos Library only if it was generated
-                    if let portraitEffectsMatteData = self.portraitEffectsMatteData {
+        let image = UIImage(data: photoData)
+        PreviewPhoto.show(with: self.vc, and: image!, complition: { (isEditing) in
+            guard !isEditing else{
+                self.vc.dismiss(animated: true, completion: nil)
+                return
+            }
+            PHPhotoLibrary.requestAuthorization { status in
+                if status == .authorized {
+                    PHPhotoLibrary.shared().performChanges({
+                        let options = PHAssetResourceCreationOptions()
                         let creationRequest = PHAssetCreationRequest.forAsset()
-                        creationRequest.addResource(with: .photo,
-                                                    data: portraitEffectsMatteData,
-                                                    options: nil)
+                        options.uniformTypeIdentifier = self.requestedPhotoSettings.processedFileType.map { $0.rawValue }
+                        creationRequest.addResource(with: .photo, data: photoData, options: options)
+
+                        if let livePhotoCompanionMovieURL = self.livePhotoCompanionMovieURL {
+                            let livePhotoCompanionMovieFileOptions = PHAssetResourceCreationOptions()
+                            livePhotoCompanionMovieFileOptions.shouldMoveFile = true
+                            creationRequest.addResource(with: .pairedVideo,
+                                                        fileURL: livePhotoCompanionMovieURL,
+                                                        options: livePhotoCompanionMovieFileOptions)
+                        }
+
+                        // Save Portrait Effects Matte to Photos Library only if it was generated
+                        if let portraitEffectsMatteData = self.portraitEffectsMatteData {
+                            let creationRequest = PHAssetCreationRequest.forAsset()
+                            creationRequest.addResource(with: .photo,
+                                                        data: portraitEffectsMatteData,
+                                                        options: nil)
+                        }
+                        // Save Portrait Effects Matte to Photos Library only if it was generated
+                        for semanticSegmentationMatteData in self.semanticSegmentationMatteDataArray {
+                            let creationRequest = PHAssetCreationRequest.forAsset()
+                            creationRequest.addResource(with: .photo,
+                                                        data: semanticSegmentationMatteData,
+                                                        options: nil)
+                        }
+
+                    }, completionHandler: { _, error in
+                        if let error = error {
+                            print("Error occurred while saving photo to photo library: \(error)")
+                        }
+
+                        self.didFinish()
                     }
-                    // Save Portrait Effects Matte to Photos Library only if it was generated
-                    for semanticSegmentationMatteData in self.semanticSegmentationMatteDataArray {
-                        let creationRequest = PHAssetCreationRequest.forAsset()
-                        creationRequest.addResource(with: .photo,
-                                                    data: semanticSegmentationMatteData,
-                                                    options: nil)
-                    }
-                    
-                }, completionHandler: { _, error in
-                    if let error = error {
-                        print("Error occurred while saving photo to photo library: \(error)")
-                    }
-                    
+                    )
+                } else {
                     self.didFinish()
                 }
-                )
-            } else {
-                self.didFinish()
             }
-        }
+        })
     }
 }
 

@@ -172,6 +172,9 @@ open class TLPhotosPickerViewController: UIViewController {
             self.configure.allowedLivePhotos = newValue
         }
     }
+    
+    public static weak var delegateEditor: PhotoEditorDelegate?
+    
     @objc open var canSelectAsset: ((PHAsset) -> Bool)? = nil
     @objc open var didExceedMaximumNumberOfSelection: ((TLPhotosPickerViewController) -> Void)? = nil
     @objc open var handleNoAlbumPermissions: ((TLPhotosPickerViewController) -> Void)? = nil
@@ -634,19 +637,24 @@ extension TLPhotosPickerViewController: UIImagePickerControllerDelegate, UINavig
 
     private func showCamera() {
         guard !maxCheck() else { return }
-        let picker = UIImagePickerController()
-        picker.sourceType = .camera
-        picker.mediaTypes = [kUTTypeImage as String]
-        if self.configure.allowedVideoRecording {
-            picker.mediaTypes.append(kUTTypeMovie as String)
-            picker.videoQuality = self.configure.recordingVideoQuality
-            if let duration = self.configure.maxVideoDuration {
-                picker.videoMaximumDuration = duration
+        if #available(iOS 13.0, *), TLPhotosPickerViewController.delegateEditor != nil{
+            let picker = CameraViewController(nibName: "CameraViewController", bundle: TLBundle.bundle())
+            self.present(picker, animated: true, completion: nil)
+        }else{
+            let picker = UIImagePickerController()
+            picker.sourceType = .camera
+            picker.mediaTypes = [kUTTypeImage as String]
+            if self.configure.allowedVideoRecording {
+                picker.mediaTypes.append(kUTTypeMovie as String)
+                picker.videoQuality = self.configure.recordingVideoQuality
+                if let duration = self.configure.maxVideoDuration {
+                    picker.videoMaximumDuration = duration
+                }
             }
+            picker.allowsEditing = false
+            picker.delegate = self
+            self.present(picker, animated: true, completion: nil)
         }
-        picker.allowsEditing = false
-        picker.delegate = self
-        self.present(picker, animated: true, completion: nil)
     }
 
     private func handleDeniedAlbumsAuthorization() {
