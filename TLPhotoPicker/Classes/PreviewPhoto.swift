@@ -8,12 +8,6 @@
 
 import UIKit
 
-
-public protocol PhotoEditorDelegate: class{
-    func openPhotoEditor(with image: UIImage, complition: (Bool) -> ())
-}
-
-
 @available(iOS 13.0, *)
 class PreviewPhoto: UIViewController{
     
