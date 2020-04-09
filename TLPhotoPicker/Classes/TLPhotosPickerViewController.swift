@@ -36,7 +36,7 @@ extension TLPhotosPickerViewControllerDelegate {
 
 //for log
 public protocol PhotoEditorDelegate: class{
-    func openPhotoEditor(with image: UIImage, complition: (Bool) -> ())
+    func openPhotoEditor(with image: UIImage,parentVC: UIViewController, complition: (Bool) -> ())
 }
 
 public protocol TLPhotosPickerLogDelegate: class {

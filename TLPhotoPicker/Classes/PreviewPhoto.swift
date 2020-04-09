@@ -98,7 +98,7 @@ class PreviewPhoto: UIViewController{
     
     @objc func editPhoto(){
         guard let delegate = TLPhotosPickerViewController.delegateEditor else { return }
-        delegate.openPhotoEditor(with: image, complition: self.complition)
+        delegate.openPhotoEditor(with: image, parentVC: self, complition: self.complition)
     }
     
     @objc func takePhoto(){
