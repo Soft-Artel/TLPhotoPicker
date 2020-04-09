@@ -99,7 +99,6 @@ class PreviewPhoto: UIViewController{
     @objc func editPhoto(){
         guard let delegate = TLPhotosPickerViewController.delegateEditor else { return }
         delegate.openPhotoEditor(with: image, parentVC: self, complition: self.complition)
-        self.dismiss(animated: true, completion: nil)
     }
     
     @objc func takePhoto(){
