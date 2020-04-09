@@ -9,6 +9,10 @@ import UIKit
 import AVFoundation
 import Photos
 
+protocol CameraVCRouter{
+    func close()
+}
+
 @available(iOS 13.0, *)
 class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelegate, ItemSelectionViewControllerDelegate {
     
@@ -685,7 +689,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
             
             photoSettings.photoQualityPrioritization = self.photoQualityPrioritizationMode
             
-            let photoCaptureProcessor = PhotoCaptureProcessor(with: photoSettings, willCapturePhotoAnimation: {
+            let photoCaptureProcessor = PhotoCaptureProcessor(with: photoSettings, parentVC: self, willCapturePhotoAnimation: {
                 // Flash the screen to signal that AVCam took a photo.
                 DispatchQueue.main.async {
                     self.previewView.videoPreviewLayer.opacity = 0
@@ -728,7 +732,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
                         self.spinner.stopAnimating()
                     }
                 }
-            }, parentVC: self
+            }
             )
             // The photo output holds a weak reference to the photo capture delegate and stores it in an array to maintain a strong reference.
             self.inProgressPhotoCaptureDelegates[photoCaptureProcessor.requestedPhotoSettings.uniqueID] = photoCaptureProcessor
@@ -1234,5 +1238,12 @@ extension AVCaptureDevice.DiscoverySession {
         }
         
         return uniqueDevicePositions.count
+    }
+}
+
+@available(iOS 13.0, *)
+extension CameraViewController: CameraVCRouter{
+    func close() {
+        self.dismiss(animated: true, completion: nil)
     }
 }

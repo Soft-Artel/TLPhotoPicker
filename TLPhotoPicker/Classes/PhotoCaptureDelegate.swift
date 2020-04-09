@@ -31,21 +31,20 @@ class PhotoCaptureProcessor: NSObject {
     private var semanticSegmentationMatteDataArray = [Data]()
     
     private var maxPhotoProcessingTime: CMTime?
+        
+    private var parentVC: CameraVCRouter
     
-    private var vc: UIViewController
-    
-    init(with requestedPhotoSettings: AVCapturePhotoSettings,
+    init(with requestedPhotoSettings: AVCapturePhotoSettings, parentVC: CameraVCRouter,
          willCapturePhotoAnimation: @escaping () -> Void,
          livePhotoCaptureHandler: @escaping (Bool) -> Void,
          completionHandler: @escaping (PhotoCaptureProcessor) -> Void,
-         photoProcessingHandler: @escaping (Bool) -> Void,
-         parentVC: UIViewController) {
+         photoProcessingHandler: @escaping (Bool) -> Void) {
         self.requestedPhotoSettings = requestedPhotoSettings
         self.willCapturePhotoAnimation = willCapturePhotoAnimation
         self.livePhotoCaptureHandler = livePhotoCaptureHandler
         self.completionHandler = completionHandler
         self.photoProcessingHandler = photoProcessingHandler
-        self.vc = parentVC
+        self.parentVC = parentVC
     }
     
     private func didFinish() {
@@ -200,9 +199,9 @@ extension PhotoCaptureProcessor: AVCapturePhotoCaptureDelegate {
         }
         
         let image = UIImage(data: photoData)
-        PreviewPhoto.show(with: self.vc, and: image!, complition: { (isEditing) in
+        PreviewPhoto.show(with: (self.parentVC as! UIViewController), and: image!, complition: { (isEditing) in
             guard !isEditing else{
-                self.vc.dismiss(animated: true, completion: nil)
+                self.parentVC.close()
                 return
             }
             PHPhotoLibrary.requestAuthorization { status in
@@ -247,6 +246,7 @@ extension PhotoCaptureProcessor: AVCapturePhotoCaptureDelegate {
                 } else {
                     self.didFinish()
                 }
+                self.parentVC.close()
             }
         })
     }
