@@ -19,6 +19,8 @@ class PreviewPhoto: UIViewController{
     let usePhotoBtn = UIButton()
     let retakeBtn = UIButton()
     
+    static var sharedPreviewPhoto: PreviewPhoto? = nil
+    
     var  complition: ((Bool) -> ())!
     
     static func show(with parentVC: UIViewController, and image: UIImage, complition: @escaping (Bool) -> ()){
@@ -26,6 +28,7 @@ class PreviewPhoto: UIViewController{
         preview.image = image
         preview.complition = complition
         preview.previewImage.image = image
+        PreviewPhoto.sharedPreviewPhoto = preview
         parentVC.present(preview, animated: true, completion: nil)
     }
     
