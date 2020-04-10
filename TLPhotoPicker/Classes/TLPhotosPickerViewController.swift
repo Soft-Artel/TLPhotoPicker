@@ -415,7 +415,7 @@ extension TLPhotosPickerViewController {
         self.titleLabel.textColor = self.headerColor
         self.subTitleLabel.textColor = self.headerColor
         self.cancelButton.tintColor = self.btnColor
-        self.doneButton.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: UIFont.labelFontSize), NSAttributedString.Key.foregroundColor: self.btnColor], for: .normal)
+        self.doneButton.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: UIFont.labelFontSize), NSAttributedString.Key.foregroundColor: self.btnColor], for: [])
         self.emptyView.isHidden = true
         self.emptyImageView.image = self.configure.emptyImage
         self.albumPopView.tableView.delegate = self
@@ -641,7 +641,7 @@ extension TLPhotosPickerViewController: UIImagePickerControllerDelegate, UINavig
 
     private func showCamera() {
         guard !maxCheck() else { return }
-        if #available(iOS 13.0, *), TLPhotosPickerViewController.delegateEditor != nil{
+        if #available(iOS 13.0, *){//, TLPhotosPickerViewController.delegateEditor != nil{
             let picker = CameraViewController(nibName: "CameraViewController", bundle: TLBundle.bundle())
             self.present(picker, animated: true, completion: nil)
         }else{

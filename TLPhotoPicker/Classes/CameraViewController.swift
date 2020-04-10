@@ -96,23 +96,23 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     
     func addIcons(){
         let capturePhoto = TLBundle.podBundleImage(named: "CapturePhoto")?.withRenderingMode(.alwaysTemplate)
-        self.photoButton.setImage(capturePhoto, for: .normal)
+        self.photoButton.setImage(capturePhoto, for: [])
         self.photoButton.tintColor = .red
         
         let captureVideo = TLBundle.podBundleImage(named: "CaptureVideo")?.withRenderingMode(.alwaysTemplate)
-        self.recordButton.setImage(captureVideo, for: .normal)
+        self.recordButton.setImage(captureVideo, for: [])
         self.recordButton.tintColor = .red
         
         let depthON = TLBundle.podBundleImage(named: "DepthON")?.withRenderingMode(.alwaysTemplate)
-        self.depthDataDeliveryButton.setImage(depthON, for: .normal)
+        self.depthDataDeliveryButton.setImage(depthON, for: [])
         self.depthDataDeliveryButton.tintColor = .red
         
         let flipCamera = TLBundle.podBundleImage(named: "FlipCamera")?.withRenderingMode(.alwaysTemplate)
-        self.cameraButton.setImage(flipCamera, for: .normal)
+        self.cameraButton.setImage(flipCamera, for: [])
         self.cameraButton.tintColor = .red
         
         let livePhotoON = TLBundle.podBundleImage(named: "LivePhotoON")?.withRenderingMode(.alwaysTemplate)
-        self.livePhotoModeButton.setImage(livePhotoON, for: .normal)
+        self.livePhotoModeButton.setImage(livePhotoON, for: [])
         self.livePhotoModeButton.tintColor = .red
         
         let movieSelector = TLBundle.podBundleImage(named: "MovieSelector")?.withRenderingMode(.alwaysTemplate)
@@ -122,7 +122,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         self.captureModeControl.setImage(photoSelector, forSegmentAt: 0)
 
         let portraitMatteON = TLBundle.podBundleImage(named: "PortraitMatteON")?.withRenderingMode(.alwaysTemplate)
-        self.portraitEffectsMatteDeliveryButton.setImage(portraitMatteON, for: .normal)
+        self.portraitEffectsMatteDeliveryButton.setImage(portraitMatteON, for: [])
         self.portraitEffectsMatteDeliveryButton.tintColor = .red
         
     }
@@ -766,11 +766,13 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
             
             DispatchQueue.main.async {
                 if livePhotoMode == .on {
-                    self.livePhotoModeButton.setImage(#imageLiteral(resourceName: "LivePhotoON"), for: [])
+                    let livePhotoON = TLBundle.podBundleImage(named: "LivePhotoON")?.withRenderingMode(.alwaysTemplate)
+                    self.livePhotoModeButton.setImage(livePhotoON, for: [])
                 } else {
-                    let livePhotoOFF = TLBundle.podBundleImage(named: "LivePhotoOFF")
+                    let livePhotoOFF = TLBundle.podBundleImage(named: "LivePhotoOFF")?.withRenderingMode(.alwaysTemplate)
                     self.livePhotoModeButton.setImage(livePhotoOFF, for: [])
                 }
+                self.livePhotoModeButton.tintColor = .red
             }
         }
     }
@@ -791,18 +793,20 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
             
             DispatchQueue.main.async {
                 if depthDataDeliveryMode == .on {
-                    let depthON = TLBundle.podBundleImage(named: "DepthON")
+                    let depthON = TLBundle.podBundleImage(named: "DepthON")?.withRenderingMode(.alwaysTemplate)
                     self.depthDataDeliveryButton.setImage(depthON, for: [])
-                    let portraitMatteON = TLBundle.podBundleImage(named: "PortraitMatteON")
+                    let portraitMatteON = TLBundle.podBundleImage(named: "PortraitMatteON")?.withRenderingMode(.alwaysTemplate)
                     self.portraitEffectsMatteDeliveryButton.setImage(portraitMatteON, for: [])
                     self.semanticSegmentationMatteDeliveryButton.isEnabled = true
                 } else {
-                    let depthOFF = TLBundle.podBundleImage(named: "DepthOFF")
+                    let depthOFF = TLBundle.podBundleImage(named: "DepthOFF")?.withRenderingMode(.alwaysTemplate)
                     self.depthDataDeliveryButton.setImage(depthOFF, for: [])
-                    let portraitMatteOFF = TLBundle.podBundleImage(named: "PortraitMatteOFF")
+                    let portraitMatteOFF = TLBundle.podBundleImage(named: "PortraitMatteOFF")?.withRenderingMode(.alwaysTemplate)
                     self.portraitEffectsMatteDeliveryButton.setImage(portraitMatteOFF, for: [])
                     self.semanticSegmentationMatteDeliveryButton.isEnabled = false
                 }
+                self.depthDataDeliveryButton.tintColor = .red
+                self.portraitEffectsMatteDeliveryButton.tintColor = .red
             }
         }
     }
@@ -822,10 +826,13 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
             
             DispatchQueue.main.async {
                 if portraitEffectsMatteDeliveryMode == .on {
-                    self.portraitEffectsMatteDeliveryButton.setImage(#imageLiteral(resourceName: "PortraitMatteON"), for: [])
+                    let portraitMatteON = TLBundle.podBundleImage(named: "PortraitMatteON")?.withRenderingMode(.alwaysTemplate)
+                    self.portraitEffectsMatteDeliveryButton.setImage(portraitMatteON, for: [])
                 } else {
-                    self.portraitEffectsMatteDeliveryButton.setImage(#imageLiteral(resourceName: "PortraitMatteOFF"), for: [])
+                    let portraitMatteON = TLBundle.podBundleImage(named: "PortraitMatteOFF")?.withRenderingMode(.alwaysTemplate)
+                    self.portraitEffectsMatteDeliveryButton.setImage(portraitMatteON, for: [])
                 }
+                self.portraitEffectsMatteDeliveryButton.tintColor = .red
             }
         }
     }
@@ -947,8 +954,9 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         // Enable the Record button to let the user stop recording.
         DispatchQueue.main.async {
             self.recordButton.isEnabled = true
-            let captureStop = TLBundle.podBundleImage(named: "CaptureStop")
+            let captureStop = TLBundle.podBundleImage(named: "CaptureStop")?.withRenderingMode(.alwaysTemplate)
             self.recordButton.setImage(captureStop, for: [])
+            self.recordButton.tintColor = .red
         }
     }
     
@@ -1015,7 +1023,10 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
             self.cameraButton.isEnabled = self.videoDeviceDiscoverySession.uniqueDevicePositionsCount > 1
             self.recordButton.isEnabled = true
             self.captureModeControl.isEnabled = true
-            self.recordButton.setImage(#imageLiteral(resourceName: "CaptureVideo"), for: [])
+            let captureVideo = TLBundle.podBundleImage(named: "CaptureVideo")?.withRenderingMode(.alwaysTemplate)
+            self.recordButton.setImage(captureVideo, for: [])
+            self.recordButton.tintColor = .red
+            self.dismiss(animated: true, completion: nil)
         }
     }
     

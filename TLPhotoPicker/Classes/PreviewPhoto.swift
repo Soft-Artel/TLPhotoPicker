@@ -56,42 +56,41 @@ class PreviewPhoto: UIViewController{
         let widthInPoints = self.previewImage.image?.size.width
         let widthInPixels = widthInPoints! * self.previewImage.image!.scale
         
-        let arrowRight = TLBundle.podBundleImage(named: "ArrowRight")?.withRenderingMode(.alwaysTemplate)
+        let arrowRight = TLBundle.podBundleImage(named: "ArrowRight")
         
         self.previewImage.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
         self.previewImage.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
         if heightInPixels > widthInPixels{
             let scale = widthInPixels / heightInPixels
             
-            self.previewImage.topAnchor.constraint(equalTo: self.editBtn.bottomAnchor,constant: 20).isActive = true
-            self.previewImage.bottomAnchor.constraint(equalTo: self.usePhotoBtn.topAnchor, constant: -20).isActive = true
+            self.previewImage.topAnchor.constraint(greaterThanOrEqualTo: self.editBtn.bottomAnchor, constant: 20).isActive = true//constraint(equalTo: self.editBtn.bottomAnchor,constant: 20).isActive = true
+            self.previewImage.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -80).isActive = true
             self.previewImage.widthAnchor.constraint(equalTo: self.previewImage.heightAnchor, multiplier: scale).isActive = true
         }
         
         self.editBtn.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 30).isActive = true
         self.editBtn.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -16).isActive = true
-        self.editBtn.widthAnchor.constraint(equalToConstant: 32).isActive = true
         self.editBtn.heightAnchor.constraint(equalToConstant: 26).isActive = true
+        self.editBtn.widthAnchor.constraint(equalTo: self.editBtn.heightAnchor, multiplier: 32/26).isActive = true
         let imageEdit = TLBundle.podBundleImage(named: "EditBtn")
-        self.editBtn.setImage(imageEdit, for: .normal)
+        self.editBtn.setImage(imageEdit, for: [])
         self.editBtn.addTarget(self, action: #selector(self.editPhoto), for: .touchUpInside)
-        self.editBtn.tintColor = .red
-        
+                
         self.usePhotoBtn.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -16).isActive = true
         self.usePhotoBtn.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -16).isActive = true
-        self.usePhotoBtn.widthAnchor.constraint(equalToConstant: 10).isActive = true
-        self.usePhotoBtn.heightAnchor.constraint(equalToConstant: 18).isActive = true
-        self.usePhotoBtn.setImage(arrowRight, for: .normal)
-        self.usePhotoBtn.tintColor = .red
+        self.usePhotoBtn.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        self.usePhotoBtn.heightAnchor.constraint(equalTo: self.usePhotoBtn.widthAnchor, multiplier: 18/10).isActive = true
+        self.usePhotoBtn.setImage(arrowRight, for: [])
+        self.usePhotoBtn.contentEdgeInsets = UIEdgeInsets(top: 18, left: 10, bottom: 18, right: 10)
         
         self.usePhotoBtn.addTarget(self, action: #selector(self.takePhoto), for: .touchUpInside)
         
         self.retakeBtn.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 16).isActive = true
         self.retakeBtn.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -16).isActive = true
-        self.retakeBtn.widthAnchor.constraint(equalToConstant: 10).isActive = true
-        self.retakeBtn.heightAnchor.constraint(equalToConstant: 10).isActive = true
-        self.retakeBtn.setImage(arrowRight, for: .normal)
-        self.retakeBtn.tintColor = .red
+        self.retakeBtn.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        self.retakeBtn.heightAnchor.constraint(equalTo: self.usePhotoBtn.widthAnchor, multiplier: 18/10).isActive = true
+        self.retakeBtn.setImage(arrowRight, for: [])
+        self.retakeBtn.contentEdgeInsets = UIEdgeInsets(top: 18, left: 10, bottom: 18, right: 10)
         
         self.retakeBtn.addTarget(self, action: #selector(self.retake), for: .touchUpInside)
         
