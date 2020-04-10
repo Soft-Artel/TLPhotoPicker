@@ -1255,8 +1255,10 @@ extension AVCaptureDevice.DiscoverySession {
 @available(iOS 13.0, *)
 extension CameraViewController: CameraVCRouter{
     func close() {
-        PreviewPhoto.sharedPreviewPhoto?.dismiss(animated: false, completion: { [unowned self] in
-            self.dismiss(animated: true, completion: nil)
-        })
+        DispatchQueue.main.async {
+            PreviewPhoto.sharedPreviewPhoto?.dismiss(animated: false, completion: { [unowned self] in
+                self.dismiss(animated: true, completion: nil)
+            })
+        }
     }
 }
