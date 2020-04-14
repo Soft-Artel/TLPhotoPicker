@@ -36,7 +36,7 @@ extension TLPhotosPickerViewControllerDelegate {
 
 //for log
 public protocol PhotoEditorDelegate: class{
-    func openPhotoEditorWithCamera(parentVC:UIViewController)
+    func openPhotoEditorWithCamera(parentVC:UIViewController, complition: () -> ())
 }
  
 public protocol TLPhotosPickerLogDelegate: class {
@@ -642,7 +642,7 @@ extension TLPhotosPickerViewController: UIImagePickerControllerDelegate, UINavig
     private func showCamera() {
         guard !maxCheck() else { return }
         if let delegate = TLPhotosPickerViewController.delegateEditor{
-            delegate.openPhotoEditorWithCamera(parentVC: self)
+            delegate.openPhotoEditorWithCamera(parentVC: self, complition: {self.collectionView.selectItem(at: IndexPath(row: 0, section: 1), animated: true, scrollPosition: .top)})
         }else{
             let picker = UIImagePickerController()
             picker.sourceType = .camera
