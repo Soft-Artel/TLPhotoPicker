@@ -638,7 +638,7 @@ extension TLPhotosPickerViewController: UIImagePickerControllerDelegate, UINavig
             break
         }
     }
-
+ 
     private func showCamera() {
         guard !maxCheck() else { return }
         if let delegate = TLPhotosPickerViewController.delegateEditor{
