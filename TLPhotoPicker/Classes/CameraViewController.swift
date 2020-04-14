@@ -41,7 +41,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         // Set up the video preview view.
         previewView.session = session
         
-        self.addIcons()
         /*
          Check the video authorization status. Video access is required and audio
          access is optional. If the user denies audio access, AVCam won't
@@ -92,39 +91,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
             self.spinner.color = UIColor.yellow
             self.previewView.addSubview(self.spinner)
         }
-    }
-    
-    func addIcons(){
-        let capturePhoto = TLBundle.podBundleImage(named: "CapturePhoto")?.withRenderingMode(.alwaysTemplate)
-        self.photoButton.setImage(capturePhoto, for: [])
-        self.photoButton.tintColor = .red
-        
-        let captureVideo = TLBundle.podBundleImage(named: "CaptureVideo")?.withRenderingMode(.alwaysTemplate)
-        self.recordButton.setImage(captureVideo, for: [])
-        self.recordButton.tintColor = .red
-        
-        let depthON = TLBundle.podBundleImage(named: "DepthON")?.withRenderingMode(.alwaysTemplate)
-        self.depthDataDeliveryButton.setImage(depthON, for: [])
-        self.depthDataDeliveryButton.tintColor = .red
-        
-        let flipCamera = TLBundle.podBundleImage(named: "FlipCamera")?.withRenderingMode(.alwaysTemplate)
-        self.cameraButton.setImage(flipCamera, for: [])
-        self.cameraButton.tintColor = .red
-        
-        let livePhotoON = TLBundle.podBundleImage(named: "LivePhotoON")?.withRenderingMode(.alwaysTemplate)
-        self.livePhotoModeButton.setImage(livePhotoON, for: [])
-        self.livePhotoModeButton.tintColor = .red
-        
-        let movieSelector = TLBundle.podBundleImage(named: "MovieSelector")?.withRenderingMode(.alwaysTemplate)
-        self.captureModeControl.setImage(movieSelector, forSegmentAt: 1)
-        self.captureModeControl.tintColor = .red
-        let photoSelector = TLBundle.podBundleImage(named: "PhotoSelector")?.withRenderingMode(.alwaysTemplate)
-        self.captureModeControl.setImage(photoSelector, forSegmentAt: 0)
-
-        let portraitMatteON = TLBundle.podBundleImage(named: "PortraitMatteON")?.withRenderingMode(.alwaysTemplate)
-        self.portraitEffectsMatteDeliveryButton.setImage(portraitMatteON, for: [])
-        self.portraitEffectsMatteDeliveryButton.tintColor = .red
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {

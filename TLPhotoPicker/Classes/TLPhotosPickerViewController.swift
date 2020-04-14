@@ -642,7 +642,9 @@ extension TLPhotosPickerViewController: UIImagePickerControllerDelegate, UINavig
     private func showCamera() {
         guard !maxCheck() else { return }
         if let delegate = TLPhotosPickerViewController.delegateEditor{
-            delegate.openPhotoEditorWithCamera(parentVC: self, complition: {self.collectionView.selectItem(at: IndexPath(row: 0, section: 1), animated: true, scrollPosition: .top)})
+            delegate.openPhotoEditorWithCamera(parentVC: self, complition: {
+                self.collectionView(self.collectionView, didSelectItemAt: IndexPath(row: 1, section: 0))
+            })
         }else{
             let picker = UIImagePickerController()
             picker.sourceType = .camera
