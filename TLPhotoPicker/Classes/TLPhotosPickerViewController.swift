@@ -952,10 +952,10 @@ extension TLPhotosPickerViewController: UICollectionViewDelegate,UICollectionVie
         guard let collection = self.focusedCollection, let cell = self.collectionView.cellForItem(at: indexPath) as? TLPhotoCollectionViewCell else { return }
         let isCameraRow = collection.useCameraButton && indexPath.section == 0 && indexPath.row == 0
         if isCameraRow {
-            if Platform.isSimulator {
-                print("not supported by the simulator.")
-                return
-            }else {
+//            if Platform.isSimulator {
+//                print("not supported by the simulator.")
+//                return
+//            }else {
                 if self.configure.cameraCellNibSet?.nibName != nil {
                     cell.selectedCell()
                 }else {
@@ -963,7 +963,7 @@ extension TLPhotosPickerViewController: UICollectionViewDelegate,UICollectionVie
                 }
                 self.logDelegate?.selectedCameraCell(picker: self)
                 return
-            }
+            //}
         }
         guard var asset = collection.getTLAsset(at: indexPath), let phAsset = asset.phAsset else { return }
         cell.popScaleAnim()
