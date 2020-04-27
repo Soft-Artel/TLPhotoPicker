@@ -641,7 +641,7 @@ extension TLPhotosPickerViewController: UIImagePickerControllerDelegate, UINavig
  
     private func showCamera() {
         guard !maxCheck() else { return }
-        if let delegate = TLPhotosPickerViewController.delegateEditor{
+        if #available(iOS 13.0, *), let delegate = TLPhotosPickerViewController.delegateEditor{
             delegate.openPhotoEditorWithCamera(parentVC: self, complition: { [unowned self] (isOnlyOne) in
                 if isOnlyOne{
                     self.dismiss(animated: false, completion: nil)
