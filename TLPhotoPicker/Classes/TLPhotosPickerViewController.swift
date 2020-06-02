@@ -643,11 +643,11 @@ extension TLPhotosPickerViewController: UIImagePickerControllerDelegate, UINavig
         guard !maxCheck() else { return }
         if #available(iOS 13.0, *), let delegate = TLPhotosPickerViewController.delegateEditor{
             delegate.openPhotoEditorWithCamera(parentVC: self, complition: { [unowned self] (isOnlyOne) in
-                if isOnlyOne{
-                    self.dismiss(animated: false, completion: nil)
-                }else{
+//                if isOnlyOne{
+//                    self.dismiss(animated: false, completion: nil)
+//                }else{
                     self.collectionView(self.collectionView, didSelectItemAt: IndexPath(row: 1, section: 0))
-                }
+//                }
             })
         }else{
             let picker = UIImagePickerController()
