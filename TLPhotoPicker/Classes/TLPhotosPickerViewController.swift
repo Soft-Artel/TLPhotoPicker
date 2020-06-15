@@ -386,7 +386,7 @@ extension TLPhotosPickerViewController {
         UIGraphicsEndImageContext()
         return result
     }
-    
+     
     private func initItemSize() {
         guard let layout = self.collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
             return
