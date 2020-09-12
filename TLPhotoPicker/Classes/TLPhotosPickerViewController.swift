@@ -546,11 +546,11 @@ extension TLPhotosPickerViewController {
     private func dismiss(done: Bool) {
         if done {
             if self.iCloudCollection.isEmpty {
-                #if swift(>=4.1)
+//                #if swift(>=4.1)
                 self.delegate?.dismissPhotoPicker(withPHAssets: self.selectedAssets.compactMap{ $0.phAsset })
-                #else
-                self.delegate?.dismissPhotoPicker(withPHAssets: self.selectedAssets.flatMap{ $0.phAsset })
-                #endif
+//                #else
+//                self.delegate?.dismissPhotoPicker(withPHAssets: self.selectedAssets.flatMap{ $0.phAsset })
+//                #endif
                 self.delegate?.dismissPhotoPicker(withTLPHAssets: self.selectedAssets)
                 self.completionWithTLPHAssets?(self.selectedAssets)
                 #if swift(>=4.1)
