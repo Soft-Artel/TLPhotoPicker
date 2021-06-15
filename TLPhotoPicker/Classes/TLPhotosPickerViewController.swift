@@ -395,7 +395,7 @@ extension TLPhotosPickerViewController {
         let sizeWidth = self.view.frame.size.width
         let sizeHeight = self.view.frame.size.height
         let widthScreen = sizeWidth < sizeHeight ? sizeWidth : sizeHeight
-        let width = (widthScreen-(5*(count-1)))/count
+        let width = ((widthScreen-(5*(count-1)))/count).rounded(.down)
         self.thumbnailSize = CGSize(width: width, height: width)
         layout.itemSize = self.thumbnailSize
         self.collectionView.collectionViewLayout = layout
